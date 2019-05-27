@@ -9,6 +9,8 @@ public class Commands {
 	
 	private final static Map<Integer, InCommand> DECODERS = new HashMap<>();
 	
+	// a class for sending data
+	
 	public static abstract class OutCommand{
 		private final int id;
 		
@@ -29,6 +31,8 @@ public class Commands {
 		
 	}
 	
+	// a class for receving data
+	
 	public static abstract class InCommand{
 		private final int id;
 		
@@ -45,7 +49,7 @@ public class Commands {
 		}
 		protected abstract void decode(ByteBuffer buffer);
 	}
-
+	// each commends have a number, the number are set up here.
 	public static final int NEW_MESSAGE = 1;
 	public static final int NEW_CHAT = 2;
 	public static final int VOICE_CHAT = 3;

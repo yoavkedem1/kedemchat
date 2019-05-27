@@ -9,6 +9,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
+//record the voice
+
 public class VoiceRecorder {
 	
 	private boolean m_isRunning;
@@ -31,7 +33,7 @@ public class VoiceRecorder {
 		m_callback = callback;
 		m_format = format;
 	}
-	
+	//start recording
 	public void start() {
 		if (!m_isRunning) {
 			m_isRunning = true;
@@ -39,14 +41,14 @@ public class VoiceRecorder {
 			//m_callbackThread.start();
 		}
 	}
-	
+	//stop recording 
 	public void end() {
 		m_isRunning = false;
 		m_thread.interrupt();
 		m_callbackThread.interrupt();
 	}
 	
-	
+	// a callback for the recording of the voice
 	protected void callbackThread() {
 		while (!Thread.interrupted() && this.m_isRunning) {
 			while (!m_update);
@@ -61,7 +63,7 @@ public class VoiceRecorder {
 			
 		}
 	}
-	
+	//record the voice
 	//TODO maybe merge with peek/pop
 	public void record() {
 		//AudioFormat format = new AudioFormat(44100, 16 , 1, true, true);

@@ -50,6 +50,8 @@ public class ChatMenuUIManager implements UIManager {
 		m_windowId = windowId;
 	}
 	
+	// a method the define what will happen we the chat menu will start
+	
 	@Override
 	public void onStart(JFrame frame) {
 		m_chats = new JPanel();
@@ -205,6 +207,8 @@ public class ChatMenuUIManager implements UIManager {
 		frame.getContentPane().add(m_panel);		
 	}
 	
+	// a class the define the chat ui
+	
 	private JPanel makeChatBox(ClientChat chat, int width){
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(width - 40, 50));
@@ -212,6 +216,8 @@ public class ChatMenuUIManager implements UIManager {
 		panel.setBorder(new TitledBorder(new EtchedBorder(), chat.getName()));
 		
 		panel.add(new JLabel("Members: " + chat.getClient().getClientNames(chat.getClients().stream().collect(Collectors.toList())).get().orElse(Arrays.asList("ERROR"))));
+		
+		//mouse listeners
 		
 		MouseAdapter m_adapter = new MouseAdapter() {
 			private long last = 0;
@@ -252,11 +258,15 @@ public class ChatMenuUIManager implements UIManager {
 		return panel;
 	}
 
+	// a method that delete the ui when it closes
+	
 	@Override
 	public void onClose(JFrame frame) {
 		frame.getContentPane().removeAll();
 	}
-
+	
+	// a method that update the ui 
+	
 	@Override
 	public void update(JFrame frame) {
 		

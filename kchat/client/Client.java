@@ -30,7 +30,7 @@ import kchat.common.Utils;
 import kchat.common.utils.CollectionUtils.Tuple;
 
 public class Client {
-
+	// a class the does the handling on the client side
 	public static void debug(String msg) {
 
 		if (Utils.DEBUG_ENABLED) {
@@ -57,7 +57,9 @@ public class Client {
 	public Client(ClientData data) {
 		this(data, 3339);
 	}
-
+	
+	// the constructor of the class 
+	
 	public Client(ClientData data, int callPort) {
 		m_data = data;
 		m_chats = new LinkedList<>();
@@ -87,7 +89,9 @@ public class Client {
 	protected DatagramSocket getCallSocket() {
 		return m_callSocket;
 	}
-
+	
+	// a method that run forever that wait for a voice call and handle it
+	
 	private void listenForCalls() {
 		while (true) {
 			byte[] arr = new byte[1024];
@@ -139,7 +143,7 @@ public class Client {
 
 		}
 	}
-
+	// start the gui
 	public void startUI() {
 		m_uis.add(new ClientUI(this, 0, 640, 480)); // Main UI
 		m_uis.add(new ClientUI(this, 1, 200, 480)); // Secondary UI
@@ -157,11 +161,13 @@ public class Client {
 	public List<ClientUI> getAllWindows() {
 		return m_uis;
 	}
-
+	//call the bind function
 	public boolean bind(InetAddress address) {
 		return bind(address, 1337);
 	}
-
+	
+	// wait for information from the server
+	
 	private void listenThread() throws IOException {
 		Timer t = new Timer(1000,
 				a -> Commands.send(this, new Commands.UpdateData(System.currentTimeMillis() - 1000, m_data)));
@@ -175,7 +181,7 @@ public class Client {
 			Commands.decode(buf);
 		}
 	}
-
+	// bind the socket to the server
 	public boolean bind(InetAddress address, int port) {
 		try {
 			m_socket = new Socket();
@@ -184,12 +190,12 @@ public class Client {
 			m_socket.connect(addr, 500);
 			ByteBuffer buf = ByteBuffer.allocate(256);
 			buf.putLong(m_data.getUUID());
-			Utils.writeUTF8(buf, m_data.getName());
+			Utils.writeUTF8(buf, m_data.getName()); // decode the data that will be sent in UTF-8
 			m_socket.getOutputStream().write(buf.array());
 			Commands.send(this, new Commands.UpdateData(0l, m_data));
 			new Thread(() -> {
 				try {
-					listenThread();
+					listenThread();			// run the listing thread
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -239,14 +245,18 @@ public class Client {
 		}
 		return true;
 	}
-
+	
+	// gets clients from server
+	
 	public Request<List<Long>> getOnlineClients() {
 		m_updateConnect = false;
 		Commands.send(this, new Commands.ConnectedOut(this));
 
 		return Request.future(() -> m_updateConnect ? Optional.of(m_connected) : Optional.empty());
 	}
-
+	
+	// get the name of the clients
+	
 	public Request<List<String>> getClientNames(final List<Long> clients) {
 		List<Long> missing = clients.stream().filter(x -> !m_cachedNames.containsKey(x)).collect(Collectors.toList());
 		if (missing.isEmpty()) {
@@ -267,7 +277,7 @@ public class Client {
 		m_connected = clients;
 		m_updateConnect = true;
 	}
-
+	//get your ip from the server
 	public Request<InetAddress> requestClientIP(long uuid) {
 		Commands.send(this, new Commands.ClientIpOut(uuid, this));
 		return Request.future(

@@ -15,12 +15,12 @@ public final class CollectionUtils {
 			return "(" + _1 + "," + _2 + ")";
 		}
 	}
-	
+	//merge tuple
 	public static final <L,R> Tuple<L,R> Tuple(L left, R right){
 		return new Tuple<>(left, right);
 	}
 	
-	
+	// Compress iterator 
 	public static <L,R> Iterator<Tuple<L,R>> zipIterator(final Iterator<L> left, final Iterator<R> right){
 		return new Iterator<Tuple<L,R>>(){
 			

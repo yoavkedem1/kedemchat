@@ -12,7 +12,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.UnsupportedLookAndFeelException;
-
+//manages all client ui
 public class ClientUI {
 	private UIManager m_manager;
 	private Frame m_frame;

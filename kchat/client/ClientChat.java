@@ -21,7 +21,7 @@ public class ClientChat extends Chat{
 	public Client getClient() {
 		return m_client;
 	}
-	
+	// send the meesege 
 	public void sendMessage(ChatMessage message) {
 		Commands.send(m_client, new Commands.NewMessage(this, message));
 	}

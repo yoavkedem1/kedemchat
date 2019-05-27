@@ -3,7 +3,7 @@ package kchat.client;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
+// ask the server for information in a period of time
 public interface Request<T> {
 	boolean isFinished();
 	Optional<T> get();

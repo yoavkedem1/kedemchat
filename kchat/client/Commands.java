@@ -11,18 +11,20 @@ import kchat.common.ChatMessage;
 import kchat.common.ClientData;
 import kchat.common.Utils;
 
+//Manages chat commends 
+
 public class Commands extends kchat.common.Commands{
 	
 	public static class NewMessage extends OutCommand{
 		private final ChatMessage m_msg;
 		private final ClientChat m_chat;
 		
+		
 		public NewMessage(ClientChat chat, ChatMessage msg) {
 			super(NEW_MESSAGE);
 			m_msg = msg;
 			m_chat = chat;
 		}
-		
 		public void encode(ByteBuffer buffer) {
 			buffer.putLong(m_chat.getUUID());
 			buffer.put(m_msg.encode().array());
@@ -32,7 +34,7 @@ public class Commands extends kchat.common.Commands{
 	public static class ConnectedOut extends OutCommand{
 		
 		private Client m_client;
-		
+		// connect out from the server
 		public ConnectedOut(Client client) {
 			super(CONNECTED_IN);
 			m_client = client;
@@ -60,7 +62,7 @@ public class Commands extends kchat.common.Commands{
 			}
 		}
 	}
-	
+	//update data for the user
 	public static class UpdateData extends OutCommand{
 		private final long m_from;
 		private final ClientData m_data;
@@ -75,7 +77,7 @@ public class Commands extends kchat.common.Commands{
 			buffer.putLong(m_data.getUUID());
 		}
 	}
-	
+	// Generate a new chat
 	public static class NewChat extends OutCommand{
 		private final String m_name;
 		private final Set<Long> m_clients;
@@ -96,7 +98,7 @@ public class Commands extends kchat.common.Commands{
 			buffer.putLong(m_date);
 		}
 	}
-	
+	// notify the clients there are new message
 	public static class NewMessageIn extends InCommand {
 		private final Client m_client;
 
@@ -115,7 +117,7 @@ public class Commands extends kchat.common.Commands{
 			m_client.getChat(chat).ifPresent((c) -> c.addMessage(message));
 		}
 	}
-
+	// notify the client he is in a new chat
 	public static class NewChatIn extends InCommand {
 
 		private Client m_client;
@@ -146,7 +148,7 @@ public class Commands extends kchat.common.Commands{
 		}
 	}
 	
-	
+	// send client ip and id
 	public static class ClientIpOut extends OutCommand{
 		private long m_uuid;
 		
@@ -170,6 +172,7 @@ public class Commands extends kchat.common.Commands{
 		
 		
 	}
+	// get user ip
 	public static class ClientIpIn extends InCommand{
 		
 		private Client m_client;

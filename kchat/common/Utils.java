@@ -13,7 +13,7 @@ public class Utils {
 		StackTraceElement[] arr = Thread.currentThread().getStackTrace();
 		return arr[depth];
 	}
-	
+	// Encrypt string to UTF8
 	public static final void writeUTF8(ByteBuffer buffer, String string) {
 		byte[] bytes;
 		try {
@@ -26,7 +26,7 @@ public class Utils {
 	}
 	
 	
-	
+	//decrypt byte to string with UTF8
 	public static final String readUTF8(ByteBuffer buffer) {
 		int length = buffer.getInt();
 		byte[] bytes = new byte[length];

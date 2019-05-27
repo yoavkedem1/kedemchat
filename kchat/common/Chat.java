@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-
+//simple general commends for chat
 @SuppressWarnings("serial")
 public abstract class Chat implements Serializable{
 	
@@ -32,30 +32,30 @@ public abstract class Chat implements Serializable{
 	public Chat(long uuid, String name, long date, Set<Long> clients) {
 		this(uuid, name, date, clients, new HashSet<ChatMessage>());
 	}
-	
+
 	public void addMessage(ChatMessage message) {
 		if (message.getID() == -1) {
 			message.setID(m_messages.size()+1);
 		}
 		m_messages.add(message);
 	}
-	
+	//filter message by generic
 	public Set<ChatMessage> filter(Predicate<? super ChatMessage> pred) {
 		return m_messages.stream().filter(pred).collect(Collectors.toSet());
 	}
-	
+	//filter message by date
 	public Set<ChatMessage> fromDate(long date) {
 		return filter((m) -> m.getDate() >= date);
 	}
-	
+	//Message in specific time
 	public Set<ChatMessage> inRange(long from, long to) {
 		return filter((m) -> m.getDate() >= from && m.getDate() <= to);
 	}
-	
+	//message for specific sender
 	public Set<ChatMessage> fromSender(long sender) {
 		return filter((m) -> m.getSenderID() == sender);
 	}
-	
+	//newest message sent
 	public Set<ChatMessage> peekNewest(int count) {
 		return m_messages.stream().sorted().limit(count).collect(Collectors.toSet());
 	}

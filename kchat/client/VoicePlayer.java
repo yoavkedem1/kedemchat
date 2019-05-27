@@ -11,10 +11,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 
+//play the voice that was sent
+
 public class VoicePlayer {
 	
-	//TODO maybe not use as a constant and do like we did in Python
-	private static final int BUFFER_SIZE = 1024;
 	
 	private AudioFormat m_format;
 	

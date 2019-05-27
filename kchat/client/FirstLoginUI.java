@@ -20,6 +20,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import kchat.common.ClientData;
 import kchat.common.StringMessage;
 
+//manage ui screen for login
+
 public class FirstLoginUI extends JFrame{
 	public FirstLoginUI(int width, int height) {
 		super("Kedem Chat - Join a server!");

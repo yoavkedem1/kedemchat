@@ -31,6 +31,8 @@ import kchat.common.ChatMessage;
 import kchat.common.CompoundMessage;
 import kchat.common.StringMessage;
 
+// a class the manage the chat ui
+
 public class ChatUIManager implements UIManager{
 
 	private long fromDate = 0;
@@ -51,7 +53,7 @@ public class ChatUIManager implements UIManager{
 	
 	
 	
-	
+	//send the message in the chatField to all the members of the chat
 	protected void sendMessage() {
 		String text = m_chatField.getText();
 		m_chat.sendMessage(
@@ -60,6 +62,8 @@ public class ChatUIManager implements UIManager{
 		m_chatField.setText("");
 	}
 	
+	
+	//define how the ui will lool
 	@Override
 	public void onStart(JFrame frame) {
 		m_chatBox = new JPanel();
@@ -123,7 +127,9 @@ public class ChatUIManager implements UIManager{
 		m_chatField.requestFocus();
 		//m_chatField.setSele
 	}
-
+	
+	
+	//closes the ui
 	@Override
 	public void onClose(JFrame frame) {
 		frame.remove(m_pane);
@@ -146,7 +152,7 @@ public class ChatUIManager implements UIManager{
 		
 		
 	}
-	
+	//show message that have been sent
 	private void drawMessages(JFrame frame, List<ChatMessage> messages) {
 		m_chatBox.removeAll();
 		for (ChatMessage msg: messages) {
@@ -157,6 +163,8 @@ public class ChatUIManager implements UIManager{
 			comp.setLocation(0, comp.getY());
 		}
 	}
+	
+	// a sub method of drawMessages, it get the messege format
 	
 	private JPanel makeComponent(JFrame frame, ChatMessage message) {
 		switch (message.getMessageId()){

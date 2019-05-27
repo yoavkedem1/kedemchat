@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 import static kchat.common.utils.CollectionUtils.*;
 
+// a class for complicated message
+
 @SuppressWarnings("serial")
 public class CompoundMessage extends ChatMessage{
 

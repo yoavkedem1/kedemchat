@@ -28,7 +28,7 @@ public abstract class ChatMessage implements Comparable<ChatMessage>, Serializab
 		m_id = id;
 		MSG_ID = msg_id;
 	}
-	
+	//buffer that is sent in every message
 	public ByteBuffer encode() {
 		ByteBuffer buf = ByteBuffer.allocate(28);
 		buf.putInt(MSG_ID);
@@ -62,7 +62,7 @@ public abstract class ChatMessage implements Comparable<ChatMessage>, Serializab
 	public int getMessageId() {
 		return MSG_ID;
 	}
-	
+	//decode the message from byte to string
 	public static final ChatMessage read(ByteBuffer buffer) {
 		int type = buffer.getInt();
 		switch (type) {
@@ -78,7 +78,7 @@ public abstract class ChatMessage implements Comparable<ChatMessage>, Serializab
 		
 	}
 	
-	
+	//build the message 
 	public String toString() {
 		String message = getClass().getSimpleName() + ":" + System.lineSeparator();
 		for (Tuple<String, Object> tup : dataEntries()) {

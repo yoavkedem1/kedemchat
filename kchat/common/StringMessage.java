@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 
 import java.util.List;
 
+// a string message class
 
 @SuppressWarnings("serial")
 public class StringMessage extends ChatMessage{
@@ -21,6 +22,8 @@ public class StringMessage extends ChatMessage{
 		m_flags = flags;
 	}
 
+	//encoding the message
+	
 	@Override
 	public ByteBuffer encode() {
 		int strLen = m_text.getBytes().length;

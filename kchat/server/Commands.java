@@ -22,6 +22,7 @@ import kchat.common.Commands.OutCommand;
 
 public class Commands extends kchat.common.Commands {
 
+	//send client ip by request 
 	
 	public static class ClientIpOut extends OutCommand{
 		private InetAddress m_ip;
@@ -41,6 +42,9 @@ public class Commands extends kchat.common.Commands {
 		
 		
 	}
+	
+	// get ip from client to send it to other client
+	
 	public static class ClientIpIn extends InCommand{
 		
 		private long m_uuid;
@@ -66,6 +70,8 @@ public class Commands extends kchat.common.Commands {
 		
 	}
 	
+	//add the connected client to the client list
+	
 	public static class ConnectedIn extends InCommand {
 		
 		private Server m_server;
@@ -82,6 +88,8 @@ public class Commands extends kchat.common.Commands {
 			Commands.send(m_server, new ConnectedOut(m_server), c_list, 1024);
 		}
 	}
+	
+	// get the name of the specific client
 	
 	public static class ClientNameIn extends InCommand{
 		
@@ -108,7 +116,7 @@ public class Commands extends kchat.common.Commands {
 		}
 		
 	}
-	
+	//send the connected client list
 	public static class ConnectedOut extends OutCommand{
 		
 		private Server m_server;
@@ -127,6 +135,8 @@ public class Commands extends kchat.common.Commands {
 		}
 	}
 	
+	//send the clients name
+	
 	public static class ClientNameOut extends OutCommand{
 		
 		private Set<ClientData> m_clients;
@@ -144,7 +154,7 @@ public class Commands extends kchat.common.Commands {
 			}
 		}
 	}
-	
+	//get a message from a client
 	public static class NewMessageIn extends InCommand {
 		private final Server m_server;
 
@@ -164,7 +174,9 @@ public class Commands extends kchat.common.Commands {
 			m_server.getChat(chat).ifPresent((c) -> c.addMessage(message));
 		}
 	}
-
+	
+	//get a request to start a chat
+	
 	public static class NewChatIn extends InCommand {
 
 		private Server m_server;
@@ -195,7 +207,9 @@ public class Commands extends kchat.common.Commands {
 
 		}
 	}
-
+	
+	//organize client chats and messages  
+	
 	public static class UpdateCommandIn extends InCommand {
 
 		private Server m_server;
@@ -232,7 +246,9 @@ public class Commands extends kchat.common.Commands {
 			
 		}
 	}
-
+	
+	//encode message
+	
 	public static class NewMessageOut extends OutCommand{
 		private final ChatMessage m_msg;
 		private final ServerChat m_chat;
@@ -249,6 +265,7 @@ public class Commands extends kchat.common.Commands {
 		}
 	}
 	
+	//encode the chat information 
 	
 	public static class NewChatOut extends OutCommand{
 		private final ServerChat m_chat;
@@ -267,14 +284,19 @@ public class Commands extends kchat.common.Commands {
 		}
 	}
 	
+	//send the chat information to all the required clients
+	
 	public static final void sendChat(long client, ServerChat chat) {
 		Commands.send(chat.getServer(), new NewChatOut(chat), Arrays.asList(client), 2048);
 	}	
+	
+	//send message for clients
 	
 	public static final void sendMessage(long client, ChatMessage msg, ServerChat chat) {
 		Commands.send(chat.getServer(), new NewMessageOut(chat, msg), Arrays.asList(client), 2048);
 	}
 	
+	// send out info from the socket to the client
 	public static final void send(Server server, OutCommand out, List<Long> clients, int capacity) {
 		ByteBuffer buf = ByteBuffer.allocate(capacity);
 		out.write(buf);
